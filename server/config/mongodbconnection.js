@@ -1,19 +1,21 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://josuawilliams:joewils12@cluster0.tavyn.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.URI_MONGODB
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-async function connect() {
+let db
+async function connection() {
     try {
-        await client.connect();   
-        const collection = client.db("challenge-interview").collection("Users");
-        const movie = await collection.find().toArray()
-        console.log(movie);
-        client.close();
+        await client.connect();
+        db = client.db("challenge-interview")
     } catch (error) {
-        console.log(error);
+        console.log(error, "not connetion to database")
     }
 }
-connect();
+
+function getDataDb() {
+    return db
+}
+module.exports = { getDataDb, connection }
 
 
 
