@@ -6,6 +6,14 @@ const handleError = (err, req, res, next) => {
         code = 401
         message = 'Username Or Password Wrong'
     }
+    if(err.name === 'User Not Found'){
+        code = 404
+        message = 'User Not Found'
+    }
+    if(err.name === 'Validation Error'){
+        code = 400
+        message = err.errors.map((el)=>el).join(", ")
+    }
     res.status(code).json({
         message
     })

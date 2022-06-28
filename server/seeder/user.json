@@ -2,24 +2,28 @@
     {
         "username": "jojo",
         "role": "admin",
+        "userId":1,
         "email": "jojo@email.com",
         "password": "12345"
     },
     {
         "username": "aku",
         "role": "user",
+        "userId":2,
         "email": "aku@email.com",
         "password": "12345"
     },
     {
         "username": "aka",
         "role": "user",
+        "userId":3,
         "email": "aka@email.com",
         "password": "12345"
     },
     {
         "username": "aki",
         "role": "user",
+        "userId":4,
         "email": "aki@email.com",
         "password": "12345"
     }
