@@ -6,6 +6,7 @@ const cors = require('cors')
 const Controller = require("./controller/controller")
 const { connection } = require('./config/mongodbconnection')
 const Authentication = require("./middleware/authentication")
+const AuthorizationDelete = require("./middleware/authorize")
 const handleError = require("./middleware/handleError")
 
 app.use(cors())
@@ -14,8 +15,12 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.post('/login', Controller.loginUser)
+
 app.use(Authentication)
 app.get('/', Controller.getAllComment)
+app.post('/post-comment', Controller.addComment)
+
+app.delete('/delete-comment/:id', AuthorizationDelete,  Controller.deleteComment)
 app.use(handleError)
 
 connection().then(async (db) => {
