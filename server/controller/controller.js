@@ -20,6 +20,9 @@ class Controller {
                 throw ({ name: "Username Or Password Wrong" })
             }
             const checkPass = readpass(req.body.password, data.password)
+            if(!checkPass){
+                throw ({ name: "Username Or Password Wrong" })
+            }
             const access_token = createPayload({
                 userId : data.userId,
                 email : data.email,
@@ -65,7 +68,6 @@ class Controller {
         try {
             const { id } = req.params
             const data = await Comment.deleteComment({ _id: ObjectId(id) })
-            console.log(data);
             res.status(200).json({
                 message : "Delete Success",
             })
