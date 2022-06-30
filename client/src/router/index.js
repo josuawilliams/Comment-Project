@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import loginPage from '../views/loginPage.vue'
 import DashboardPage from '../views/DashboardPage.vue'
-
+import register from '../views/register.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,6 +15,11 @@ const routes = [
     path: '/',
     name: 'dashboard',
     component: DashboardPage
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: register
   },
 ]
 
@@ -29,6 +34,9 @@ router.beforeEach((to, from, next) => {
     next({name : 'login'})
   }
   if(localStorage.getItem("access_token")&& to.name=='login'){
+    next({name : 'dashboard'})
+  }
+  if(localStorage.getItem("access_token")&& to.name=='register'){
     next({name : 'dashboard'})
   }
   next()
