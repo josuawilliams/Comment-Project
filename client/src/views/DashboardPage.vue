@@ -24,7 +24,7 @@ export default {
         ...mapWritableState(useDataComment, ['comments', 'tags']),
     },
     created() {
-        document.body.style.backgroundImage = "linear-gradient(180deg, rgba(223,222,222,1) 60%"
+        document.body.style.backgroundImage = "linear-gradient(180deg, rgba(223,222,222,1))";
         setInterval(() => {
             this.getAllComment()
         }, 1500)

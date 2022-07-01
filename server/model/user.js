@@ -1,4 +1,6 @@
 const { getDataDb } = require("../config/mongodbconnection")
+const { ObjectId } = require("mongodb")
+const {hashpass} = require("../helper/hashpass")
 
 class User {
     static user() {
@@ -16,13 +18,33 @@ class User {
             console.log(error);
         }
     }
-    static async findByUserId(datacheck) {
+    static async findOneByEmail(dataemail) {
         try {
             const data = await this.user().findOne({
-                userId: datacheck.userId
+                email: dataemail
             })
             delete data.password
             return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    static async findByUserId(datacheck) {
+        try {
+            const data = await this.user().findOne({
+                _id: ObjectId(datacheck.id)
+            })
+            delete data.password
+            return data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async insertOne(data) {
+        try {
+            data.password = hashpass(data.password)
+            const register = await this.user().insertOne(data)
         } catch (error) {
             console.log(error);
         }
@@ -34,7 +56,7 @@ class User {
                 {
                     $lookup :{
                         from : "Comments",
-                        localField : "userId",
+                        localField : "_id",
                         foreignField : "userId",
                         as : "comment"
                     }

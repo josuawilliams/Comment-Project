@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapWritableState } from 'pinia'
+import { mapActions, mapState, mapWritableState } from 'pinia'
 import { useDataLogin } from '@/store/login';
 export default {
   data() {
@@ -9,8 +9,10 @@ export default {
     }
   },
   computed: {
-    ...mapWritableState(useDataLogin, ['username', 'password'])
+    ...mapWritableState(useDataLogin, ['username', 'password']),
+    ...mapState(useDataLogin, ['dataerrorusername', 'dataerrorpassword']),
   },
+
   methods: {
     ...mapActions(useDataLogin, ['Login', 'LoginGoogle']),
     clickLogin() {
@@ -23,6 +25,7 @@ export default {
     document.body.style.backgroundImage = "linear-gradient(126deg, rgba(34,193,195,1) 27%, rgba(255,96,219,1) 65%)";
     document.body.style.backgroundRepeat = "no-repeat";
   },
+  
 }
 </script>
 
@@ -32,14 +35,16 @@ export default {
       <center>
         <h1>LOGIN PAGE</h1>
         <img class="w-75" src="" alt="" />
-        <p>Don't Have Account?</p>
+        <p>Don't Have Account?<router-link to="/register">Sign Up</router-link></p>
       </center>
       <div class="mb-3">
-        <input v-model="datausername" type="text" class="form-control" aria-describedby="emailHelp"
-          placeholder="Username" />
+       <input v-model="datausername" type="text" class="form-control" aria-describedby="username"
+          placeholder="Username" required/>
+      <p style="color: red;" v-if="dataerrorusername==true">Username Is Required</p>
       </div>
       <div class="mb-3">
-        <input v-model="datapassword" type="password" class="form-control" id="password" placeholder="password" />
+        <input v-model="datapassword" type="password" class="form-control" id="password" placeholder="password" required/>
+      <p style="color: red;" v-if="dataerrorpassword==true">Password Is Required</p>
       </div>
       <button @click.prevent="clickLogin" class="btn btn-info w-100 text-white">Sign In</button>
     </form>

@@ -24,7 +24,7 @@ class Controller {
                 throw ({ name: "Username Or Password Wrong" })
             }
             const access_token = createPayload({
-                userId : data.userId,
+                id : data._id,
                 email : data.email,
                 role : data.role,
             })
@@ -34,6 +34,31 @@ class Controller {
             })
         } catch (error) {
             next(error);
+        }
+    }
+
+    static async registerUser(req, res, next) {
+        try {
+            const{username, email, password} = req.body
+            let message = []
+            if (username == "") { message.push("Username is required") }
+            if (email == "") { message.push("Email is required") }
+            if (password == "") { message.push("Password is required") }
+            const data = await User.findOneByEmail(email)
+            if (data) {
+                if (data.email === email) {
+                    message.push("Email is already used")
+                }
+            }
+            if (message.length > 0) {
+                throw ({ name: "Validation Error", errors: message })
+            }
+            await User.insertOne(req.body)
+            res.status(201).json({
+                message: "Successfully Register Thank you"
+            })
+        } catch (error) {
+            next(error)
         }
     }
 

@@ -26,16 +26,17 @@ export default {
       <center>
         <h1>REGISTER PAGE</h1>
         <img class="w-75" src="" alt="" />
+        <p> Have Account?<router-link to="/login">Sign In</router-link></p>
       </center>
       <div class="mb-3">
         <input type="text" class="form-control" aria-describedby="usernameHelp"
           placeholder="Username" />
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" id="email" placeholder="Email" />
+        <input type="email" class="form-control" id="email" placeholder="Email" required/>
       </div>
       <div class="mb-3">
-        <input type="password" class="form-control" id="password" placeholder="password" />
+        <input type="password" class="form-control" id="password" placeholder="password" required/>
       </div>
       <button class="btn btn-info w-100 text-white">Sign Up</button>
     </form>
