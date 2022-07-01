@@ -10,7 +10,7 @@ async function Authentication(req, res, next) {
             throw({name : "User Not Found"})
         }
         req.add = {
-            id : check.userId,
+            id : check._id,
             email : check.email,
             username : check.username
         }

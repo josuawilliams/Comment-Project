@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.post('/login', Controller.loginUser)
-
+app.post('/register', Controller.registerUser)
 app.use(Authentication)
 app.get('/', Controller.getAllComment)
 app.post('/post-comment', Controller.addComment)
