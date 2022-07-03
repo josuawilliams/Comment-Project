@@ -8,6 +8,9 @@ export const useDataRegister = defineStore('Register', {
         username: '',
         password: '',
         email: '',
+        dataerrorusername: "",
+        dataerrorpassword: "",
+        dataerroremail: ""
     }),
     getters: {
 
@@ -25,18 +28,29 @@ export const useDataRegister = defineStore('Register', {
                     }
                 })
                 this.router.push('/login')
-                Swal(
-                    'Welcome',
-                    ``,
-                    'success'
-                )
             } catch (error) {
-                
-                // Swal(
-                //     'Error',
-                //     `${error.response.data.message}`,
-                //     'error'
-                // )
+                let dataerror = error.response.data.message
+                if(dataerror.split(', ').find(item =>item === "Username is required")){
+                    this.dataerrorusername = true
+                }
+                if(dataerror.split(', ').find(item =>item === "Password is required")){
+                    this.dataerrorpassword = true
+                }
+                if(dataerror.split(', ').find(item =>item === "Email is required")){
+                    this.dataerroremail = true
+                }
+                setTimeout(() => {
+                    this.dataerrorpassword = false
+                    this.dataerrorusername = false
+                    this.dataerroremail = false
+                }, 2000);
+                if(dataerror==="Email is already used"){
+                    Swal(
+                        'Error',
+                        `${error.response.data.message}`,
+                        'error'
+                    )
+                }
             }
         },
     }
