@@ -6,6 +6,16 @@ export default {
         return {
             comment: "",
             dataTags: "",
+            temp: false
+        }
+    },
+    watch: {
+        ValueCommentAndValueTags(newQuestion, oldQuestion) {
+            if (newQuestion.comment == "" || newQuestion.tags == "") {
+                this.temp = false
+            } else {
+                this.temp = true
+            }
         }
     },
     methods: {
@@ -14,6 +24,8 @@ export default {
             this.comments = this.comment
             this.tags = this.dataTags
             this.postComment()
+            this.comment = ""
+            this.dataTags = ""
         },
         deleteComment(id) {
             this.deleteCommentById(id)
@@ -22,22 +34,38 @@ export default {
     computed: {
         ...mapState(useDataComment, ['dataComment']),
         ...mapWritableState(useDataComment, ['comments', 'tags']),
+        ValueCommentAndValueTags() {
+            return { comment: this.comment, tags: this.dataTags }
+        }
     },
     created() {
-        document.body.style.backgroundImage = "linear-gradient(180deg, rgba(223,222,222,1))";
+        document.body.style.backgroundImage = "linear-gradient(126deg, rgba(34,193,195,1) 27%, rgba(255,96,219,1) 65%)";
+        document.body.style.backgroundRepeat = "no-repeat";
         setInterval(() => {
             this.getAllComment()
-        }, 1500)
+        }, 1000)
     }
 }
 </script>
 
 <template>
     <div class="containerdiv">
-        <div class="containerdashboard">
+        <div class="containerdashboard overflow-auto">
+            <div class="panel">
+                <div class="panel-body">
+                    <input v-model="comment" class="form-control" rows="2" placeholder="Comment">
+                    <input v-model="dataTags" class="form-control ms-1" rows="2" placeholder="Tags : Food, Drink">
+
+                    <div class="mar-top clearfix">
+                        <button @click="submit" class="btn btn-sm btn-primary pull-right ms-2" type="submit"
+                            :disabled="!temp">
+                            Post Comment</button>
+                    </div>
+                </div>
+            </div>
             <div>
-                <div class="row justify-content-md-center">
-                    <div v-for="data in dataComment" class="col-md-8 ">
+                <div class="row justify-content-md-center ">
+                    <div v-for="data in dataComment" class="col-md-8">
                         <div v-for="comment in data.comment" class="media g-mb-1 media-comment">
                             <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15"
                                 src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
@@ -60,17 +88,6 @@ export default {
                 </div>
             </div>
 
-            <div class="panel">
-                <div class="panel-body">
-                    <input v-model="comment" class="form-control" rows="2" placeholder="Comment">
-                    <input v-model="dataTags" class="form-control ms-1" rows="2" placeholder="Tags : Food, Drink">
-
-                    <div class="mar-top clearfix">
-                        <button @click="submit" class="btn btn-sm btn-primary pull-right ms-2" type="submit">
-                            Post Comment</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -83,11 +100,15 @@ export default {
     color: black;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 .panel {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
     width: 100%;
+    /* position: fixed; */
 }
 
 .panel-body {
@@ -111,6 +132,7 @@ export default {
     width: 80%;
     margin-bottom: 30px;
     position: relative;
+    height: 90vh;
 }
 
 .media-body {

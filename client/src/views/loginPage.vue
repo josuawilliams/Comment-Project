@@ -12,7 +12,6 @@ export default {
     ...mapWritableState(useDataLogin, ['username', 'password']),
     ...mapState(useDataLogin, ['dataerrorusername', 'dataerrorpassword']),
   },
-
   methods: {
     ...mapActions(useDataLogin, ['Login', 'LoginGoogle']),
     clickLogin() {
@@ -22,7 +21,7 @@ export default {
     },
   },
   created() {
-    document.body.style.backgroundImage = "linear-gradient(126deg, rgba(34,193,195,1) 27%, rgba(255,96,219,1) 65%)";
+   document.getElementsByTagName('body')[0].style.backgroundImage = "linear-gradient(126deg, rgba(34,193,195,1) 27%, rgba(255,96,219,1) 65%)";
     document.body.style.backgroundRepeat = "no-repeat";
   },
   
