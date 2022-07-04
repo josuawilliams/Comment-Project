@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import loginPage from '../views/loginPage.vue'
 import DashboardPage from '../views/DashboardPage.vue'
 import register from '../views/register.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,7 +26,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
